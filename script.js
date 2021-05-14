@@ -45,6 +45,7 @@ function Combat(){
     hitArray = [headDammage, bodyDammage, bodyDammage, bodyDammage, limbDammage, limbDammage, limbDammage, limbDammage, miss, miss];
     random = Math.floor(Math.random() * hitArray + 1)
 
+    //check which shot was made in the console
     function battleCalls(){
         switch(hitArray[random]){
             case headDammage:
@@ -99,12 +100,14 @@ function Combat(){
             Combat();
         }
     }else{
+        //change the text to the new hp ammount
         if(enemies[enemy].HP <= 0){
             $("#text1").text(`${enemies[enemy].Name} was defeated`);
             $("#text2").text(`where will ${hero.Name} go?`)
             $("#HP-text").text(`${hero.HP} HP left`)
             enemyStrikeFirst = false;
         }
+        //game over
         else if(hero.HP <= 0){
             $("#text1").text("GAME OVER")
             $("#text2").text(`${enemies[enemy].Name} killed you`)
@@ -113,7 +116,7 @@ function Combat(){
         }
     }
 }
-
+//hides the ability button and check which ability to use next turn
 $("#AbilityBtn").on("click",() =>{
     $("#AbilityBtn").hide()
     if(abilityAvaliable == true){
@@ -139,7 +142,7 @@ $(document).ready(() =>{
     $("#buttons").children().hide()
     $("#startBtn").show()
     $("#Valorant").show()
-
+    //gives the player a choice on phoenix or sage
     $("#startBtn").on("click", () =>{
         $("#PhoenixBtn").show();
         $("#SageBtn").show();
@@ -148,7 +151,7 @@ $(document).ready(() =>{
         $("#txt").hide();
         $("#text1").text(`Who will ${userName} choose?`);
     })
-
+//shows the player what the picked, turnes hero from an array of objects to a single object
     $("#PhoenixBtn").on("click", () =>{
         hero = hero[0];
         console.log(hero)
@@ -178,7 +181,7 @@ $(document).ready(() =>{
         $("#C-linkBtn").show();
         $("#HP-text").text(`${hero.HP} HP left`)
     })
-
+//puts the player in combat mode with cypher, cypher strikes first
     $("#C-linkBtn").on("click", () =>{
         $("#images").children().hide()
         $("#Cypher").show();
@@ -190,7 +193,7 @@ $(document).ready(() =>{
         $("#MidBtn").hide();
         $("#C-siteBtn").show()
     })
-
+//tells the player that nothing is here
     $("#MidBtn").on("click", () =>{
         $("#BG-helper").show();
         $("#Sage").hide();
@@ -200,13 +203,13 @@ $(document).ready(() =>{
         $("#LobbyBtn").show();
         $("#text1").text("No one seems to be here");
     })
-
+//tells the player that nothing is here as well
     $("#LobbyBtn").on("click", () =>{
         $("#LobbyBtn").hide();
         $("#text1").text("nobody is here either")
         $("#LongBtn").show()
     })
-
+//puts the player in combat with jett
     $("#LongBtn").on("click", () =>{
         enemy = 4
         $("#text1").text(`${enemies[enemy].Name} attacked ${hero.Name}`)
@@ -215,6 +218,7 @@ $(document).ready(() =>{
         $("#LongBtn").hide();
         $("#C-siteBtn").show()
     })
+    //puts the player in combat with yoru and killjoy, you fight killjoy before yoru
     $("#C-siteBtn").on("click", () =>{
         $("#text1").text(`KillJoy and Breach attack ${hero.Name}`);
         $("#images").children().hide();
@@ -231,7 +235,7 @@ $(document).ready(() =>{
         $("#text1").text(`Killjoy and Yoru were defeated`)
         $("#text2").text("Defuse or wait")
     })
-
+//makes the enemy you didn't kill fight you, they strike first
     $("#DefuseBtn").on("click", () =>{
         $("#images").children().hide();
         $("#WaitBtn").hide();
@@ -255,6 +259,7 @@ $(document).ready(() =>{
         }
         $("#text2").text("Defuse or wait")
     })
+    //makes the enemy you didn't kill fight you
     $("#WaitBtn").on("click", () =>{
         $("#images").children().hide();
         $("#WaitBtn").hide();
@@ -276,6 +281,7 @@ $(document).ready(() =>{
             Combat();
         }
         $("#text2").text("Defuse or wait")
+    //if you defuse, High ping breach will attack and instakill you
     })
     $("#DefuseBtn2").on("click", () =>{
         enemy = 2
@@ -287,6 +293,7 @@ $(document).ready(() =>{
         $("#Breach").show();
         $("#HP-text").text(`${hero.HP} HP left`);
     })
+    //Breach will DC, and the player is free to defuse
     $("#WaitBtn2").on("click", () =>{
         $("#text1").text(`High ping Breach disconnected`)
         $("#DefuseBtn2").hide();
@@ -296,12 +303,14 @@ $(document).ready(() =>{
         $("#images").children().hide();
         $("#Breach").show()
     })
+    //victory button
     $("#DefuseBtn3").on("click", () =>{
         $("#buttons").children().hide();
         $("#images").children().hide();
         $("#text1").text(`VICTORY! ${userName} defused the spike`);
         $("#text2").hide();
     })
+    //defeat button
     $("#WaitBtn3").on("click", () =>{
         $("#images").children().hide();
         $("#buttons").children().hide();
