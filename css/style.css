@@ -1,0 +1,44 @@
+body{
+    /*centers the content of the site (besides the background)*/
+    margin: auto;
+    width: 50%;
+    margin-top: 10%;
+    text-align: center;
+    color: #ffffff;
+    /*makes a double colored background*/
+    background: linear-gradient(110deg,#fa4454 48%, #000000 48% );
+    /*makes it so the background dosn't repeat*/
+    background-attachment: fixed;
+}
+
+h1{
+    font-size: 50pt;
+}
+
+p{
+    font-size: 25pt;
+}
+
+p, h1{
+    font-family: sans-serif;
+}
+
+/*changes the style of the input objects*/
+input{
+    background-color: #042e27   ;
+    color:#FFFDD0 ;
+    border-radius: 5px;
+    border-color: #FFFDD0;
+    border-width: 2px;
+    padding: 5px;
+}
+/*changes the size and boarder radious of the buttons*/
+#buttons input{
+    margin-right: 10px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+#buttons input:hover{
+    cursor: pointer;
+} 
