@@ -4,7 +4,7 @@ var enemies = [
         "HP" : 25,
     },
     {
-        "Name": "Breach",
+        "Name": "High ping Breach",
         "HP" : 55,
     },
     {
@@ -34,6 +34,7 @@ var hero = [
         "HP" : 350,
     }
 ];
+abilityAvaliable = true;
 
 
 function Combat(){
@@ -72,6 +73,7 @@ function Combat(){
             battleCalls()
             console.log(enemies[enemy].Name,"lost", hitArray[random], "HP")
             console.log(enemies[enemy].Name, "has", enemies[enemy].HP, "HP")
+            random = Math.floor(Math.random() * 10)
             //enemy Attack
             random = Math.floor(Math.random() * 10 + 1);
             hero.HP -= hitArray[random];
@@ -82,16 +84,17 @@ function Combat(){
         }
         else if (enemyStrikeFirst == true){
             random = Math.floor(Math.random() * 10 + 1)
-            enemies[enemy].HP -= hitArray[random];
-            battleCalls();
             //enemy attack
-            console.log(hero.Name,"lost", hero, "HP")
+            battleCalls();
+            console.log(hero.Name,"lost", hitArray[random], "HP")
             console.log(hero.Name, "has", hero.HP, "HP")
+            hero.HP -= hitArray[random]
+            random = Math.floor(Math.random() * 10)
             //hero Attack
             random = Math.floor(Math.random() * 10 + 1);
-            hero.HP -= hitArray[random];
+            enemies[enemy].HP -= hitArray[random];
             battleCalls();
-            console.log(enemies[enemy].Name,"lost", enemies[enemy].HP, "HP")
+            console.log(enemies[enemy].Name,"lost", hitArray[random], "HP")
             console.log(enemies[enemy].Name,"has", enemies[enemy].HP, "HP")
             Combat();
         }
@@ -106,9 +109,25 @@ function Combat(){
             $("#text1").text("GAME OVER")
             $("#text2").text(`${enemies[enemy].Name} killed you`)
             $("#buttons").children().hide();
+            $("#HP-text").hide();
         }
     }
 }
+
+$("#AbilityBtn").on("click",() =>{
+    $("#AbilityBtn").hide()
+    if(abilityAvaliable == true){
+        $("#buttons").children().on("click", () =>{
+            if(hero.Name == "Phoenix"){
+                enemies[enemy].HP = 0;
+            }
+            else if(hero.Name == "Sage"){
+                hero.HP = 350;
+            }
+            abilityAvaliable = false;
+        })
+    }
+})
 
 let userName = document.getElementById("txt").value
 
@@ -199,36 +218,96 @@ $(document).ready(() =>{
     $("#C-siteBtn").on("click", () =>{
         $("#text1").text(`KillJoy and Breach attack ${hero.Name}`);
         $("#images").children().hide();
-        $("#Breach").css("display", "flex");
-        $("#Yoru").css("display", "flex");
+        $("#Killjoy").show();
+        $("#Yoru").show()
+        $("#text1").text(`Defuse or wait?`)
+        $("#C-siteBtn").hide();
+        $("#WaitBtn").show();
+        $("#DefuseBtn").show();
         enemy = 2;
         Combat();
-        setTimeout(2000);
         enemy= 3;
         Combat();
+        $("#text1").text(`Killjoy and Yoru were defeated`)
+        $("#text2").text("Defuse or wait")
+    })
+
+    $("#DefuseBtn").on("click", () =>{
+        $("#images").children().hide();
+        $("#WaitBtn").hide();
+        $("#DefuseBtn").hide();
+        $("#DefuseBtn2").show();
+        $("#WaitBtn2").show();
+        enemyStrikeFirst = true;
+        if(enemies[4].HP >=0){
+            enemy = 4;
+            $("#text1").text(`${enemies[enemy].Name} attacked ${hero.Name}`)
+            $("#Jett").show();
+            $("#Cypher").hide();
+            Combat();
+        }
+        if(enemies[4].HP >=0){
+            enemy = 4;
+            $("#text1").text(`${enemies[enemy].Name} attacked ${hero.Name}`)
+            $("#Jett").show();
+            $("#Cypher").hide();
+            Combat();
+        }
+        $("#text2").text("Defuse or wait")
+    })
+    $("#WaitBtn").on("click", () =>{
+        $("#images").children().hide();
+        $("#WaitBtn").hide();
+        $("#DefuseBtn").hide();
+        $("#DefuseBtn2").show();
+        $("#WaitBtn2").show();
+        if(enemies[4].HP >=0){
+            enemy = 4;
+            $("#text1").text(`${hero.Name} attacked ${enemies[enemy].Name}`)
+            $("#Jett").show();
+            $("#Cypher").hide();
+            Combat();
+        }
+        if(enemies[4].HP >=0){
+            enemy = 4;
+            $("#text1").text(`${hero.Name} attacked ${enemies[enemy].Name}`)
+            $("#Jett").show();
+            $("#Cypher").hide();
+            Combat();
+        }
+        $("#text2").text("Defuse or wait")
+    })
+    $("#DefuseBtn2").on("click", () =>{
+        enemy = 2
+        $("#text1").text(`${enemies[enemy].Name} somehow walked in and killed you instantly due to ping`)
+        hero.HP = 0;
+        $("#text2").text("Game over");
+        $("#buttons").children().hide()
+        $("#images").children().hide()
+        $("#Breach").show();
+        $("#HP-text").text(`${hero.HP} HP left`);
+    })
+    $("#WaitBtn2").on("click", () =>{
+        $("#text1").text(`High ping Breach disconnected`)
+        $("#DefuseBtn2").hide();
+        $("#WaitBtn2").hide();
+        $("#DefuseBtn3").show();
+        $("#WaitBtn3").show();
+        $("#images").children().hide();
+        $("#Breach").show()
+    })
+    $("#DefuseBtn3").on("click", () =>{
+        $("#buttons").children().hide();
+        $("#images").children().hide();
+        $("#text1").text(`VICTORY! ${userName} defused the spike`);
+        $("#text2").hide();
+    })
+    $("#WaitBtn3").on("click", () =>{
+        $("#images").children().hide();
+        $("#buttons").children().hide();
+        $("text2").hide();
+        $("#text1").text(`${hero.Name} waited too long and let the spike explode`)
+        $("#text2").text("GAME OVER")
+        $("#HP-text").text("0 HP left")
     })
 })
-/*
-function cLink(){
-    document.getElementById("Sage").style.display = "none";
-    document.getElementById("Phoenix").style.display = "none";
-    document.getElementById("MidBtn").style.display = "none";
-    document.getElementById("C linkBtn").style.display = "none";
-    document.getElementById("Cypher").style.display = "inline";
-    
-    enemy = enemies[0]
-    document.getElementById("text1").innerHTML = `${enemy.Name} Supprised you?`
-    Combat();
-    if(hero.HP > 0){
-        document.getElementById("C siteBtn").style.display = "inline"
-        document.getElementById("text1").innerHTML = `${hero.Name} beat ${enemy.Name} with ${hero.HP} HP left`
-    }
-}
-
-function cSite(){
-    document.getElementById("text2").style.display = "none"
-    document.getElementById("C siteBtn").style.display = "none"
-    document.getElementById("Cypher").style.display = "none"
-    document.getElementById("text1").innerHTML = "Where will your actions take you? will you make it to golorious victory, or will you suffer terrible defeat. Only time will tell!"
-
-}*/
